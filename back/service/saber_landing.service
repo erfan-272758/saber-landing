@@ -1,0 +1,21 @@
+[Unit]
+Description=Saber Landing Application
+After=network.target
+
+[Service]
+# Specify the environment variables
+Environment="PORT=8080"
+
+# Path to the binary
+ExecStart=/bin/saber_landing
+
+# Restart service on failure
+Restart=always
+RestartSec=5
+
+# Ensure service restarts after crash
+StartLimitInterval=60
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
