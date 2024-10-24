@@ -1,0 +1,8 @@
+POST http://localhost:8080/api/application
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "phone": "123456789",
+  "inst_id": "johndoe_123"
+}
