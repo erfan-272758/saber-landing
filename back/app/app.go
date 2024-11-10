@@ -2,6 +2,7 @@ package app
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,10 +23,18 @@ func HandleApplication(c *gin.Context) {
 	}
 
 	// Call the function to send a Telegram message
-	if err := sendTelegramMessage(app); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
+	go func() {
+		for i := 0; i < 5; i++ {
+			if err := sendTelegramMessage(app); err == nil {
+				return
+			}
+			time.Sleep(time.Duration((i+1)*2) * time.Second)
+		}
+	}()
+	// if err := sendTelegramMessage(app); err != nil {
+	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	// 	return
+	// }
 
 	c.JSON(http.StatusOK, gin.H{"status": "Application submitted successfully"})
 }
